@@ -3,7 +3,7 @@ const sequelize=require("../config/database");
 const Client=require("./client");
 const Technician=require("./technician");
 const Test=require("./test");
-const Report=require("./Report");
+const Report=require("./report");
 
 Technician.hasMany(Test, {foreignKey:"technicianId"});
 Test.belongsTo(Technician, {foreignKey:"technicianId"});
