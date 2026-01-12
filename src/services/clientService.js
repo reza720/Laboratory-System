@@ -7,7 +7,7 @@ class ClientService{
     static async getClients(){
         return await Client.findAll();
     }
-    static async getClientsById(id){
+    static async getClientById(id){
         const target=await Client.findByPk(id);
         if(!target){
             throw new Error("Client not found");
