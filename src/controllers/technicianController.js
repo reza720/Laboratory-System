@@ -1,25 +1,50 @@
 const {TechnicianService}=require("../services");
 
 class TechnicianController{
-    async createTechnician(req,res){
-        const technician=await TechnicianService.createTechnician(req.body);
-        res.status(201).json({success:true, data:technician});
+    async createTechnician(req,res,next){
+        try{
+            const technician=await TechnicianService.createTechnician(req.body);
+            res.status(201).json({success:true, data:technician});
+        }
+        catch(error){
+            next(error);
+        }
     }
-    async getTechnicians(req,res){
-        const technician=await TechnicianService.getTechnicians();
-        res.status(200).json({success:true, data:technician});
+    async getTechnicians(req,res,next){
+        try{
+            const technician=await TechnicianService.getTechnicians();
+            res.status(200).json({success:true, data:technician});
+        }
+        catch(error){
+            next(error);
+        }
     }
-    async getTechnicianById(req,res){
-        const technician=await TechnicianService.getTechnicianById(req.params.id);
-        res.status(200).json({success:true, data:technician});
+    async getTechnicianById(req,res,next){
+        try{
+            const technician=await TechnicianService.getTechnicianById(req.params.id);
+            res.status(200).json({success:true, data:technician});
+        }
+        catch(error){
+            next(error);
+        }
     }
-    async updateTechnician(req,res){
-        const technician=await TechnicianService.updateTechnician(req.params.id, req.body);
-        res.status(200).json({success:true, data:technician});
+    async updateTechnician(req,res,next){
+        try{
+            const technician=await TechnicianService.updateTechnician(req.params.id, req.body);
+            res.status(200).json({success:true, data:technician});
+        }
+        catch(error){
+            next(error);
+        }
     }
-    async deleteTechnician(req,res){
-        await TechnicianService.deleteTechnician(req.params.id);
-        res.status(204).send();
+    async deleteTechnician(req,res,next){
+        try{
+            await TechnicianService.deleteTechnician(req.params.id);
+            res.status(204).send();
+        }
+        catch(error){
+            next(error);
+        }
     }
 }
 module.exports=new TechnicianController();

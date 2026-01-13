@@ -1,5 +1,5 @@
 const TestController=require("./testController");
-const ClientController=require("./clientService");
+const ClientController=require("./clientController");
 const TechnicianController=require("./technicianController");
 const ReportController=require("./reportController");
 

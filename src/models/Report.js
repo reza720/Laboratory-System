@@ -6,9 +6,7 @@ const Report=sequelize.define("Report",{
     testId:{type:DataTypes.INTEGER, allowNull:false},
     technicianId:{type:DataTypes.INTEGER, allowNull:false},
     clientId:{type:DataTypes.INTEGER, allowNull:false},
-    result:{type:DataTypes.STRING, allowNull:false, validate:{
-        notEmpty: { msg: "Result cannot be empty" }
-    }},
+    result:{type:DataTypes.STRING, allowNull:false},
     date:{type:DataTypes.DATEONLY, allowNull:false},
 },{
     timestamps:true
