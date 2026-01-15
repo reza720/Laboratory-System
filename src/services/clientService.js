@@ -1,28 +1,30 @@
 const {Client}=require("../models");
 
 class ClientService{
-    static async createClient(data){
-        return await Client.create(data);
+    async createClient(data){
+        return Client.create(data);
     }
-    static async getClients(){
-        return await Client.findAll();
+    async getClients(){
+        return Client.findAll();
     }
-    static async getClientById(id){
+    async getClientById(id){
         const target=await Client.findByPk(id);
         if(!target){
-            throw new Error("Client not found");
+            const err=new Error("Client not found");
+            err.status=404;
+            throw err;
         }
         return target;
     }
-    static async updateClient(id,data){
-        await this.getClientsById(id);
-        await Client.update(data,{where:{id}});
-        return await this.getClientsById(id);
+    async updateClient(id,data){
+        const client=await this.getClientById(id);
+        await client.update(data);
+        return client;
     }
-    static async deleteClient(id){
-        await this.getClientsById(id);
-        await Client.destroy({where:{id}});
+    async deleteClient(id){
+        const client=await this.getClientById(id);
+        await client.destroy();
         return {message:"deleted"};
     }
 }
-module.exports= ClientService;
+module.exports= new ClientService();

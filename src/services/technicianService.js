@@ -1,28 +1,30 @@
 const {Technician}=require("../models");
 
 class TechnicianService{
-    static async createTechnician(data){
-        return await Technician.create(data);
+    async createTechnician(data){
+        return Technician.create(data);
     }
-    static async getTechnicians(){
-        return await Technician.findAll();
+    async getTechnicians(){
+        return Technician.findAll();
     }
-    static async getTechnicianById(id){
+    async getTechnicianById(id){
         const target=await Technician.findByPk(id);
         if(!target){
-            throw new Error("Technician not found");
+            const err=new Error("Technician not Found");
+            err.status=404;
+            throw err;
         }
         return target;
     }
-    static async updateTechnician(id,data){
-        await this.getTechnicianById(id);
-        await Technician.update(data,{where:{id}});
-        return await this.getTechnicianById(id);
+    async updateTechnician(id,data){
+        const technician=await this.getTechnicianById(id);
+        await technician.update(data);
+        return technician;
     }
-    static async deleteTechnician(id){
-        await this.getTechnicianById(id);
-        await Technician.destroy({where:{id}});
+    async deleteTechnician(id){
+        const technician=await this.getTechnicianById(id);
+        await technician.destroy();
         return {message:"deleted"};
     }
 }
-module.exports=TechnicianService;
+module.exports=new TechnicianService();

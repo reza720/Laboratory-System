@@ -1,32 +1,34 @@
 const {Test, Technician}=require("../models");
 
 class TestService{
-    static async createTest(data){
-        return await Test.create(data);
+    async createTest(data){
+        return Test.create(data);
     }
-    static async getTests(){
-        return await Test.findAll({include:[
+    async getTests(){
+        return Test.findAll({include:[
             {model:Technician, attributes:["id","name","email"]}
         ]});
     }
-    static async getTestById(id){
+    async getTestById(id){
         const target=await Test.findByPk(id,{include:[
             {model:Technician, attributes:["id","name","email"]}
         ]});
         if(!target){
-            throw new Error("Test not found");
+            const err=new Error("Test not found");
+            err.status=404;
+            throw err;
         }
         return target;
     }
-    static async updateTest(id,data){
-        await this.getTestById(id);
-        await Test.update(data,{where:{id}});
-        return await this.getTestById(id);
+    async updateTest(id,data){
+        const test=await this.getTestById(id);
+        await test.update(data);
+        return test;
     }
-    static async deleteTest(id){
-        await this.getTestById(id);
-        await Test.destroy({where:{id}});
+    async deleteTest(id){
+        const test=await this.getTestById(id);
+        await test.destroy();
         return {message:"deleted"};
     }
 }
-module.exports=TestService;
+module.exports=new TestService();

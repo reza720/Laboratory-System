@@ -1,7 +1,7 @@
 const {TechnicianService}=require("../services");
 
 class TechnicianController{
-    async createTechnician(req,res,next){
+    static async createTechnician(req,res,next){
         try{
             const technician=await TechnicianService.createTechnician(req.body);
             res.status(201).json({success:true, data:technician});
@@ -10,7 +10,7 @@ class TechnicianController{
             next(error);
         }
     }
-    async getTechnicians(req,res,next){
+    static async getTechnicians(req,res,next){
         try{
             const technician=await TechnicianService.getTechnicians();
             res.status(200).json({success:true, data:technician});
@@ -19,7 +19,7 @@ class TechnicianController{
             next(error);
         }
     }
-    async getTechnicianById(req,res,next){
+    static async getTechnicianById(req,res,next){
         try{
             const technician=await TechnicianService.getTechnicianById(req.params.id);
             res.status(200).json({success:true, data:technician});
@@ -28,7 +28,7 @@ class TechnicianController{
             next(error);
         }
     }
-    async updateTechnician(req,res,next){
+    static async updateTechnician(req,res,next){
         try{
             const technician=await TechnicianService.updateTechnician(req.params.id, req.body);
             res.status(200).json({success:true, data:technician});
@@ -37,7 +37,7 @@ class TechnicianController{
             next(error);
         }
     }
-    async deleteTechnician(req,res,next){
+    static async deleteTechnician(req,res,next){
         try{
             await TechnicianService.deleteTechnician(req.params.id);
             res.status(204).send();
@@ -47,4 +47,4 @@ class TechnicianController{
         }
     }
 }
-module.exports=new TechnicianController();
+module.exports=TechnicianController;
